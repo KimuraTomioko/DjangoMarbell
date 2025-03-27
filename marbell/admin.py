@@ -21,3 +21,8 @@ class HouseAdmin(admin.ModelAdmin):
 @admin.register(HousePhoto)
 class HousePhotoAdmin(admin.ModelAdmin):
     list_display = ('house', 'photo')
+
+#@admin.register(Rewiews)
+#class RewiewAdmin(admin.ModelAdmin):
+#    list_display = ('name', 'rate')
+#    list_display_links = ('name',)

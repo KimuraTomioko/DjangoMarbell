@@ -21,3 +21,18 @@ class BidCreation(forms.ModelForm):
             'phone_number': forms.TextInput(attrs={'class':'form-control'}),
             'message': forms.Textarea(attrs={'class':'form-control'})
         }
+
+#Форма для комментариев на случай развития сайта
+class RewiewForm(forms.ModelForm):
+    class Meta:
+        model = Rewiews
+        fields = (
+            'name',
+            'rate',
+            'text'
+        )
+
+        widgets = {
+            'name': forms.TextInput(attrs={'class':'form-contorl'}),
+            'rate': forms.NumberInput(attrs={'class':'form-control'})
+        }
