@@ -43,6 +43,31 @@ class HousePhoto(models.Model):
         verbose_name = 'Фотография дома'
         verbose_name_plural = 'Фотографии домов'
 
+
+class House_Spain(models.Model):
+    name = models.CharField(max_length=MAX_LENGHT_CHAR, verbose_name='Название дома')
+    description = models.TextField(blank=True, null=True, verbose_name='Описание')
+    prices = models.TextField(blank=True, null=True, verbose_name='Цены')
+    mileage = models.TextField(blank=True, null=True, verbose_name='Пробег')
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = 'Дом исп.'
+        verbose_name_plural = 'Дома исп.'
+
+class HousePhoto_Spain(models.Model):
+    house = models.ForeignKey(House_Spain, on_delete=models.CASCADE, related_name='photos', verbose_name='Дом')
+    photo = models.ImageField(upload_to='image/%Y/%m/%d', null=True, blank=True, verbose_name='Фотография')
+
+    def __str__(self):
+        return f"Фото для {self.house.name}"
+    
+    class Meta:
+        verbose_name = 'Фотография дома исп.'
+        verbose_name_plural = 'Фотографии домов исп.'
+
 class Rewiews(models.Model):
     name = models.CharField(max_length=50, blank=False, null=False, verbose_name = 'Имя пользователя')
     rate = models.PositiveIntegerField(verbose_name='Рейтинг', validators=[MinValueValidator(1), MaxValueValidator(5)])

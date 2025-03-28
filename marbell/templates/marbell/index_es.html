@@ -1,24 +1,3 @@
-import re
-
-def convert_image_paths(html_content):
-    # Регулярное выражение для поиска тегов img
-    pattern = r'<img\s+src="images/([^"]+)"\s+alt="([^"]+)">'
-    
-    # Функция замены для каждого совпадения
-    def replace_match(match):
-        image_path = match.group(1)  # путь к изображению
-        alt_text = match.group(2)    # текст alt
-        new_path = f'<img src="{{% static \'images/{image_path}\' %}}" alt="{alt_text}">'
-        return new_path
-    
-    # Выполняем замену для всех совпадений
-    modified_html = re.sub(pattern, replace_match, html_content)
-    return modified_html
-
-# Пример использования
-if __name__ == "__main__":
-    # Тестовый HTML
-    test_html = '''
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
@@ -36,6 +15,10 @@ if __name__ == "__main__":
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'marbell/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://mhkit.rometheme.pro/vantura/wp-content/plugins/elementskit-lite/modules/elementskit-icon-pack/assets/css/ekiticons.css">
+    <link rel="stylesheet" href="https://mhkit.rometheme.pro/vantura/wp-content/plugins/elementor/assets/css/widget-icon-box.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://mhkit.rometheme.pro/vantura/wp-content/plugins/elementskit-lite/modules/elementskit-icon-pack/assets/css/ekiticons.css">
@@ -188,7 +171,7 @@ if __name__ == "__main__":
         <div class="container">
             <div class="navbar-wrapper">
                 <a class="navbar-brand">
-                    <img src="../images/logo/IMG_8475.png" alt="MarbellaCamper" class="navbar-logo">
+                    <img src="{% static 'marbell/images/logo/IMG_8475.png' %}" alt="MarbellaCamper" class="navbar-logo">
                 </a>
                 <div class="navbar-menu">
                     <ul class="navbar-nav">
@@ -214,7 +197,7 @@ if __name__ == "__main__":
     <!-- Hero Section -->
     <header class="hero">
         <div class="hero-background">
-            <img src="../images/pictures/23F3D002-03E2-4570-BCCF-1375D8E4E83D.jpeg" class="hero-bg-image">
+            <img src="{% static 'marbell/images/pictures/23F3D002-03E2-4570-BCCF-1375D8E4E83D.jpeg' %}" class="hero-bg-image">
             <div class="overlay"></div>
         </div>
         <div class="container">
@@ -235,312 +218,56 @@ if __name__ == "__main__":
         <!-- Motorhomes Section -->
         <section id="motorhomes" class="section">
             <div class="container">
-                <h2 class="section-title lang-en">Nuestras Autocaravanas</h2>
+                <h2 class="section-title lang-en">Motorhomes</h2>
                 <h2 class="section-title lang-es" style="display: none;">Nuestras Autocaravanas de Lujo</h2>
                 <div class="motorhomes-grid">
-                    <!-- Benimar Sport 323 -->
-                    <div class="motorhome-card">
-                        <div class="swiper motorhome-slider">
-                            <div class="swiper-wrapper">                          
-                                <div class="swiper-slide">
-                                    <img src="../images/1 автодом/0042AAE5-1992-4109-80E4-EADD39269D9E.JPG" alt="Benimar Sport 323">
+                    {% for house in houses %}
+                        <div class="motorhome-card">
+                            <div class="swiper motorhome-slider">
+                                <div class="swiper-wrapper">
+                                    {% for photo in house.photos %}
+                                        <div class="swiper-slide">
+                                            <img src="{{ photo.photo.url }}" alt="{{ house.name }}">
+                                        </div>
+                                    {% empty %}
+                                        <div class="swiper-slide">
+                                            <img src="{% static 'marbell/images/no_photo.jpg' %}" alt="No Photo Available">
+                                        </div>
+                                    {% endfor %}
                                 </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/1 автодом/IMG_7314.JPEG" alt="Benimar Sport 323">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/1 автодом/IMG_7320.jpg" alt="Benimar Sport 323">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/1 автодом/IMG_7322.JPEG" alt="Benimar Sport 323">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/1 автодом/IMG_7331.JPEG" alt="Benimar Sport 323">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/1 автодом/IMG_7333.JPEG" alt="Benimar Sport 323">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/1 автодом/IMG_7339.JPEG" alt="Benimar Sport 323">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/1 автодом/IMG_7342.jpg" alt="Benimar Sport 323">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/1 автодом/IMG_7344.jpg" alt="Benimar Sport 323">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/1 автодом/IMG_7350.JPEG" alt="Benimar Sport 323">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/1 автодом/IMG_7354.jpg" alt="Benimar Sport 323">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/1 автодом/IMG_7356.jpg" alt="Benimar Sport 323">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/1 автодом/IMG_7358.jpg" alt="Benimar Sport 323">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/1 автодом/IMG_7364.JPEG" alt="Benimar Sport 323">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/1 автодом/IMG_7365.JPEG" alt="Benimar Sport 323">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/1 автодом/IMG_7361 (1).JPEG" alt="Benimar Sport 323">
-                                </div>
-
-                                <div class="swiper-slide">
-                                    <img src="../images/1 автодом/01772c07-72af-4655-8a92-6f94f929ec29.JPG" alt="Benimar Sport 323">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src=" ../images/1 автодом/17A8465B-D8E0-4A49-96E9-627FDA693D2F.JPG" alt="Benimar Sport 323">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/1 автодом/80A219C2-15FC-4D24-B722-560D362C32C4.JPG" alt="Benimar Sport 323">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/1 автодом/F5D94B92-8146-4C30-A49A-5B7F231A5552.JPG" alt="Benimar Sport 323">
-                                </div>
+                                <div class="swiper-pagination"></div>
+                                <div class="swiper-button-prev"></div>
+                                <div class="swiper-button-next"></div>
                             </div>
-                            <div class="swiper-pagination"></div>
-                            <div class="swiper-button-prev"></div>
-                            <div class="swiper-button-next"></div>
-                        </div>
-                        <div class="motorhome-content">
-                            <h3>Benimar Sport 323</h3>
-                            <div class="features">
-                               <p>Homologado para viajar/dormir 7 personas. Baño completo con ducha, cocina equipada con menaje, nevera grande con congelador, armario, ropa de cama y toallas, TV smart, Webasto calefacción, placa solar, mosquiteras, bombona de gas, cámara trasera, cierras exteriores y interiores para seguridad, mesa y sillas camping plegables, porta bicicletas para 3, toldo lateral. Química WC está incluida . Seguro con cobertura total con franquicia 900€. </p>
-                            </div>
-                            <div class="motorhome-footer">
-                                <button class="btn btn-primary view-prices">Ver Precios</button>
-                                <div class="price-info" style="display: none;">
-                                    <div class="price-details">
-                                            <h4>Precios:</h4>
+                            <div class="motorhome-content">
+                                <h3>{{ house.name }}</h3>
+                                <div class="features">
+                                    <p>{{ house.description }}</p>
+                                </div>
+                                <div class="motorhome-footer">
+                                    <button class="btn btn-primary view-prices">View Prices</button>
+                                    <div class="price-info" style="display: none;">
+                                        <div class="price-details">
+                                            <h4>Prices:</h4>
                                             <ul>
-                                                <li>temporada baja (1/11-31/03) 85€/día</li>
-                                                <li>temporada media (1/04-30/06; 11/09-31/10) 115€/día</li>
-                                                <li>temporada alta (1/07-10/09) 145€/día</li>
-                                                <li>Navidad/Semana Blanca/Semana Santa 130€/día</li>
+                                                {% for price in house.prices %}
+                                                    <li>{{ price }}</li>
+                                                {% endfor %}
                                             </ul>
-                                            <h4>Kilometraje:</h4>
+                                            <h4>Mileage:</h4>
                                             <ul>
-                                                <li>150km/día incluidos</li>
-                                                <li>250km/día 15€/día</li>
-                                                <li>350km/día 25€/día</li>
-                                                <li>Km ilimitados 35€/día</li>
-                                                <li>0,25€/km extra</li>
+                                                {% for mile in house.mileage %}
+                                                    <li>{{ mile }}</li>
+                                                {% endfor %}
                                             </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- McLouis MC4-60 -->
-                    <div class="motorhome-card">
-                        <div class="swiper motorhome-slider">
-                            <div class="swiper-wrapper">                    
-                                <div class="swiper-slide">
-                                    <img src="../images/2 автодом/576B7770-C916-4A75-AD69-B2A114BEA05A.JPG" alt="McLouis MC4-60">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/2 автодом/IMG_6632.jpg" alt="McLouis MC4-60">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/2 автодом/IMG_6648.jpg" alt="McLouis MC4-60">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/2 автодом/IMG_6653.jpg" alt="McLouis MC4-60">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/2 автодом/IMG_6654.jpg" alt="McLouis MC4-60">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/2 автодом/IMG_6661.jpg" alt="McLouis MC4-60">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/2 автодом/IMG_6669.jpg" alt="McLouis MC4-60">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/2 автодом/IMG_6663.jpg" alt="McLouis MC4-60">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/2 автодом/IMG_6676.jpg" alt="McLouis MC4-60">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/2 автодом/IMG_6686.jpg" alt="McLouis MC4-60">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/2 автодом/IMG_6692.jpg" alt="McLouis MC4-60">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/2 автодом/IMG_6702.jpg" alt="McLouis MC4-60">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/2 автодом/IMG_6707.jpg" alt="McLouis MC4-60">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/2 автодом/IMG_6709.jpg" alt="McLouis MC4-60">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/2 автодом/IMG_6716.jpg" alt="McLouis MC4-60">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/2 автодом/IMG_6728.jpg" alt="McLouis MC4-60">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/2 автодом/IMG_6733.jpg" alt="McLouis MC4-60">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/2 автодом/IMG_6738.jpg" alt="McLouis MC4-60">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/2 автодом/IMG_6747.jpg" alt="McLouis MC4-60">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/2 автодом/3420df4d-9c90-4f6f-aa8c-58568b98fe59.JPG" alt="McLouis MC4-60">
-                                </div>
-            
-                                <div class="swiper-slide">
-                                    <img src="../images/2 автодом/606C6D84-B9B1-4C33-8E49-6F3016D0AB18.JPG" alt="McLouis MC4-60">
-                                </div>
-                            </div>
-                            <div class="swiper-pagination"></div>
-                            <div class="swiper-button-prev"></div>
-                            <div class="swiper-button-next"></div>
-                        </div>
-                        <div class="motorhome-content">
-                            <h3>McLouis MC4-60</h3>
-                            <div class="features">
-                              <p>Homologado para viajar/dormir 5 personas. Baño completo con ducha, cocina equipada con menaje, nevera grande con congelador, armario, ropa de cama y toallas, 2 televisores (1 TV Smart), Truma calefacción, placa solar, mosquiteras, 2 bombonas de gas, cámara trasera, cierras exteriores y interiores para seguridad, mesa y sillas camping plegables, gran maletero con zapateras, toldo lateral. Química WC está incluida . Seguro con cobertura total con franquicia 900€. </p>
-                            </div>
-                            <div class="motorhome-footer">
-                                <button class="btn btn-primary view-prices">Ver Precios</button>
-                                <div class="price-info" style="display: none;">
-                                    <div class="price-details">
-                                        <h4>Precios:</h4>
-                                        <ul>
-                                            <li>temporada baja (1/11-31/03) 85€/día</li>
-                                            <li>temporada media (1/04-30/06; 11/09-31/10) 115€/día</li>
-                                            <li>temporada alta (1/07-10/09) 145€/día</li>
-                                            <li>Navidad/Semana Blanca/Semana Santa 130€/día</li>
-                                        </ul>
-                                        <h4>Kilometraje:</h4>
-                                        <ul>
-                                            <li>150km/día incluidos</li>
-                                            <li>250km/día 15€/día</li>
-                                            <li>350km/día 25€/día</li>
-                                            <li>Km ilimitados 35€/día</li>
-                                            <li>0,25€/km extra</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Iveco Daily -->
-                    <div class="motorhome-card">
-                        <div class="swiper motorhome-slider">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <img src="../images/3 автодом/056E9CB5-D7A7-4EEA-95E7-AF3839EEC676.JPG" alt="Iveco Daily">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/3 автодом/IMG_7495.jpg" alt="Iveco Daily">
-                                </div>   
-                                <div class="swiper-slide">
-                                    <img src="../images/3 автодом/IMG_7498.jpg" alt="Iveco Daily">
-                                </div>   
-                                <div class="swiper-slide">
-                                    <img src="../images/3 автодом/IMG_7502.jpg" alt="Iveco Daily">
-                                </div>   
-                                <div class="swiper-slide">
-                                    <img src="../images/3 автодом/IMG_7503.jpg" alt="Iveco Daily">
-                                </div>   
-                                <div class="swiper-slide">
-                                    <img src="../images/3 автодом/IMG_7509.jpg" alt="Iveco Daily">
-                                </div>   
-                                <div class="swiper-slide">
-                                    <img src="../images/3 автодом/IMG_7513.jpg" alt="Iveco Daily">
-                                </div>   
-                                <div class="swiper-slide">
-                                    <img src="../images/3 автодом/IMG_7515.jpg" alt="Iveco Daily">
-                                </div>   
-                                <div class="swiper-slide">
-                                    <img src="../images/3 автодом/IMG_7517.jpg" alt="Iveco Daily">
-                                </div>   
-                                <div class="swiper-slide">
-                                    <img src="../images/3 автодом/IMG_7520.jpg" alt="Iveco Daily">
-                                </div>   
-                                <div class="swiper-slide">
-                                    <img src="../images/3 автодом/IMG_7532.jpg" alt="Iveco Daily">
-                                </div>  
-                                 <div class="swiper-slide">
-                                    <img src="../images/3 автодом/IMG_7551.jpg" alt="Iveco Daily">
-                                </div>   
-                                <div class="swiper-slide">
-                                    <img src="../images/3 автодом/IMG_7559.jpg" alt="Iveco Daily">
-                                </div>   
-                                <div class="swiper-slide">
-                                    <img src="../images/3 автодом/IMG_7562.jpg" alt="Iveco Daily">
-                                </div>   
-                                <div class="swiper-slide">
-                                    <img src="../images/3 автодом/IMG_7589.jpg" alt="Iveco Daily">
-                                </div>   
-                                <div class="swiper-slide">
-                                    <img src="../images/3 автодом/IMG_7594.jpg" alt="Iveco Daily">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/3 автодом/IMG_7602.jpg" alt="Iveco Daily">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/3 автодом/IMG_7604.jpg" alt="Iveco Daily">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/3 автодом/IMG_7611.jpg" alt="Iveco Daily">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/3 автодом/IMG_7623.jpg" alt="Iveco Daily">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../images/3 автодом/4B945A55-F325-4292-9BD5-70943B939187.JPG" alt="Iveco Daily">
-                                </div>
-                            </div>
-                            <div class="swiper-pagination"></div>
-                            <div class="swiper-button-prev"></div>
-                            <div class="swiper-button-next"></div>
-                        </div>
-                        <div class="motorhome-content">
-                            <h3>Iveco Daily</h3>
-                            <div class="features">
-                           <p>Homologado para viajar/dormir 5/4 personas (1 cama doble, 1 cama singular, 1,5 cama, posible adulto + niño). Baño completo con ducha, cocina equipada con menaje, nevera de compresor con un pequeño congelador, armario, ropa de cama y toallas, smart TV, calefacción, agua caliente, placa solar, mosquiteros, bombona de gas para cocina de gas, cámara de visión trasera, cerraduras exteriores y interiores para seguridad, mesa y sillas de camping plegables, maletero muy amplio, ducha exterior, toldo, WC químico incluido. Seguro con cobertura total con franquicia 800€.</p>
-                            </div>
-                            <div class="motorhome-footer">
-                                <button class="btn btn-primary view-prices">Ver Precios</button>
-                                <div class="price-info" style="display: none;">
-                                    <div class="price-details">
-                                        <h4>Precios:</h4>
-                                        <ul>
-                                            <li>temporada baja (1/11-31/03) 70€/día</li>
-                                            <li>temporada media (1/04-30/06; 11/09-31/10) 90€/día</li>
-                                            <li>temporada alta (1/07-10/09) 120€/día</li>
-                                            <li>Navidad/Semana Blanca/Semana Santa 105€/día</li>
-                                        </ul>
-                                        <h4>Kilometraje:</h4>
-                                        <ul>
-                                            <li>150km/día incluidos</li>
-                                            <li>250km/día 10€/día</li>
-                                            <li>350km/día 15€/día</li>
-                                            <li>Km ilimitados 25€/día</li>
-                                            <li>0,25€/km extra</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% empty %}
+                        <p>No motorhomes available.</p>
+                    {% endfor %}
                 </div>
             </div>
         </section>
@@ -559,22 +286,22 @@ if __name__ == "__main__":
                     <div class="swiper gallery-swiper">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <img src="../images/pictures/IMG_8312.JPEG" alt="MarbellaCamper Experience">
+                                <img src="{% static 'marbell/images/pictures/IMG_8312.JPEG' %}" alt="MarbellaCamper Experience">
                             </div>
                             <div class="swiper-slide">
-                                <img src="../images/pictures/IMG_8313.JPEG" alt="Luxury Motorhome">
+                                <img src="{% static 'marbell/images/pictures/IMG_8313.JPEG' %}" alt="Luxury Motorhome">
                             </div>
                             <div class="swiper-slide">
-                                <img src="../images/pictures/IMG_8677.JPEG" alt="Travel Experience">
+                                <img src="{% static 'marbell/images/pictures/IMG_8677.JPEG' %}" alt="Travel Experience">
                             </div>
                             <div class="swiper-slide">
-                                <img src="../images/pictures/IMG_8822.JPEG" alt="Camping Life">
+                                <img src="{% static 'marbell/images/pictures/IMG_8822.JPEG' %}" alt="Camping Life">
                             </div>
                             <div class="swiper-slide">
-                                <img src="../images/pictures/IMG_8826.JPEG" alt="Adventure Time">
+                                <img src="{% static 'marbell/images/pictures/IMG_8826.JPEG' %}" alt="Adventure Time">
                             </div>
                             <div class="swiper-slide">
-                                <img src="../images/pictures/IMG_8827.JPEG" alt="Scenic Views">
+                                <img src="{% static 'marbell/images/pictures/IMG_8827.JPEG' %}" alt="Scenic Views">
                             </div>
                         </div>
   
@@ -703,7 +430,7 @@ if __name__ == "__main__":
                         </div>
                     </div>
                     <div class="testimonial-image">
-                        <img src="../images/pictures/IMG_9176.JPG" alt="Camper Experience">
+                        <img src="{% static 'marbell/images/pictures/IMG_9176.JPG' %}" alt="Camper Experience">
                     </div>
                 </div>
             </div>
@@ -719,28 +446,28 @@ if __name__ == "__main__":
                         <div class="swiper suspension-swiper">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
-                                    <img src="../images/4 объявление продажа пневмоподвесок/snapedit_1742815922853.jpeg" alt="Air Suspension 1">
+                                    <img src="{% static 'marbell/images/4 объявление продажа пневмоподвесок/snapedit_1742815922853.jpeg' %}" alt="Air Suspension 1">
                                 </div>
                                 <div class="swiper-slide">
-                                        <img src="../images/4 объявление продажа пневмоподвесок/snapedit_1742815953262.jpeg" alt="Air Suspension 2">
+                                        <img src="{% static 'marbell/images/4 объявление продажа пневмоподвесок/snapedit_1742815953262.jpeg' %}" alt="Air Suspension 2">
                                     </div>
                                 <div class="swiper-slide">
-                                    <img src="../images/4 объявление продажа пневмоподвесок/snapedit_1742815986065.jpeg" alt="Air Suspension 3">
+                                    <img src="{% static 'marbell/images/4 объявление продажа пневмоподвесок/snapedit_1742815986065.jpeg' %}" alt="Air Suspension 3">
                                 </div>
                                 <div class="swiper-slide">
-                                    <img src="../images/4 объявление продажа пневмоподвесок/snapedit_1742816041445.jpeg" alt="Air Suspension 4">
+                                    <img src="{% static 'marbell/images/4 объявление продажа пневмоподвесок/snapedit_1742816041445.jpeg' %}" alt="Air Suspension 4">
                                 </div>
                                 <div class="swiper-slide">
-                                    <img src="../images/4 объявление продажа пневмоподвесок/snapedit_1742816062354.jpeg" alt="Air Suspension 5">
+                                    <img src="{% static 'marbell/images/4 объявление продажа пневмоподвесок/snapedit_1742816062354.jpeg' %}" alt="Air Suspension 5">
                                 </div>
                                 <div class="swiper-slide">
-                                    <img src="../images/4 объявление продажа пневмоподвесок/snapedit_1742816165337.jpeg" alt="Air Suspension 6">
+                                    <img src="{% static 'marbell/images/4 объявление продажа пневмоподвесок/snapedit_1742816165337.jpeg' %}" alt="Air Suspension 6">
                                 </div>
                                 <div class="swiper-slide">
-                                    <img src="../images/4 объявление продажа пневмоподвесок/Airbrush-Image-Enhancer-no-bg-HD (carve.photos).png" alt="Air Suspension 7">
+                                    <img src="{% static 'marbell/images/4 объявление продажа пневмоподвесок/Airbrush-Image-Enhancer-no-bg-HD (carve.photos).png' %}" alt="Air Suspension 7">
                                 </div>
                                 <div class="swiper-slide">
-                                    <img src="../images/4 объявление продажа пневмоподвесок/snapedit_1742816186374.jpeg" alt="Air Suspension 7">
+                                    <img src="{% static 'marbell/images/4 объявление продажа пневмоподвесок/snapedit_1742816186374.jpeg' %}" alt="Air Suspension 7">
                                 </div>
                             </div>
                             <div class="swiper-pagination"></div>
@@ -911,38 +638,47 @@ if __name__ == "__main__":
         </section>
 
         <!-- Contact Form Section -->
-        <section id="contact" class="section contact-section" style="margin-top: -120px;">
+        <section id="contact" class="section contact-section">
             <div class="container">
                 <span class="section-subtitle">CONTÁCTANOS</span>
                 <h2 class="section-title">Ponte en Contacto Con Nosotros</h2>
                 <p class="section-description">¿Tienes alguna pregunta o quieres reservar una autocaravana? ¡Estamos aquí para ayudar!</p>
                 
                 <div class="contact-form-wrapper">
-                    <form id="contactForm">
+                    <form id="contactForm" method="post" action="{% url 'main_page_es' %}">
+                        {% csrf_token %}
+                        {% if form.errors %}
+                            <div class="errors alert alert-danger">
+                                {{ form.errors }}
+                            </div>
+                        {% endif %}
                         <div class="form-row">
                             <div class="form-group half">
-                                <input type="text" id="firstName" name="firstName" placeholder=" " required>
-                                <label for="firstName">Nombre</label>
+                                {{ form.first_name }}
+                                <label for="{{ form.first_name.id_for_label }}">Nombre</label>
                             </div>
                             <div class="form-group half">
-                                <input type="text" id="lastName" name="lastName" placeholder=" " required>
-                                <label for="lastName">Apellido</label>
+                                {{ form.last_name }}
+                                <label for="{{ form.last_name.id_for_label }}">Apellido</label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="email" id="email" name="email" placeholder=" " required>
-                            <label for="email">Email</label>
+                            {{ form.email_address }}
+                            <label for="{{ form.email_address.id_for_label }}">Email</label>
                         </div>
                         <div class="form-group">
-                            <input type="tel" id="phone" name="phone" placeholder=" " required>
-                            <label for="phone">Número de Teléfono</label>
+                            {{ form.phone_number }}
+                            <label for="{{ form.phone_number.id_for_label }}">Número de Teléfono</label>
                         </div>
                         <div class="form-group">
-                            <textarea id="message" name="message" placeholder=" " required></textarea>
-                            <label for="message">Tu Mensaje</label>
+                            {{ form.message }}
+                            <label for="{{ form.message.id_for_label }}">Tu Mensaje</label>
                         </div>
                         <button type="submit" class="submit-button">Enviar Mensaje</button>
                     </form>
+                    {% if success %}
+                        <p class="alert alert-success">¡Gracias! Tu mensaje ha sido enviado.</p>
+                    {% endif %}
                 </div>
             </div>
         </section>
@@ -972,7 +708,7 @@ if __name__ == "__main__":
                 <div class="footer-content">
                     <div class="footer-col">
                         <div class="footer-logo-wrapper" style="background-color: #fff;">
-                            <img src="../images/logo/IMG_8475.png" alt="Marbella Camper" class="footer-logo">
+                            <img src="{% static 'marbell/images/logo/IMG_8475.png' %}" alt="Marbella Camper" class="footer-logo">
                         </div>
                         <p class="footer-description">
                             Experimenta la libertad del camping de lujo con nuestros alquileres de furgonetas camper premium en Marbella. Tu aventura comienza aquí.
@@ -1032,9 +768,4 @@ if __name__ == "__main__":
 
     </body>
 </html>
-    '''
     
-    # Преобразуем HTML
-    result = convert_image_paths(test_html)
-    print("Преобразованный HTML:")
-    print(result)

@@ -22,6 +22,22 @@ class HouseAdmin(admin.ModelAdmin):
 class HousePhotoAdmin(admin.ModelAdmin):
     list_display = ('house', 'photo')
 
+class HousePhotoInline_Spain(admin.TabularInline):
+    model = HousePhoto_Spain
+    extra = 1  # Показывать 1 пустое поле для добавления фото
+    max_num = 20  # Ограничение до 10 фотографий
+
+@admin.register(House_Spain)
+class HouseSpainAdmin(admin.ModelAdmin):
+    inlines = [HousePhotoInline_Spain]
+    list_display = ('name', 'description')
+
+@admin.register(HousePhoto_Spain)
+class HousePhotoSpainAdmin(admin.ModelAdmin):
+        list_display = ('house', 'photo')
+
+
+
 #@admin.register(Rewiews)
 #class RewiewAdmin(admin.ModelAdmin):
 #    list_display = ('name', 'rate')
