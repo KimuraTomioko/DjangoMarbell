@@ -11,7 +11,7 @@ class AdminBid(admin.ModelAdmin):
 class HousePhotoInline(admin.TabularInline):
     model = HousePhoto
     extra = 1  # Показывать 1 пустое поле для добавления фото
-    max_num = 20  # Ограничение до 10 фотографий
+    max_num = 20  # Ограничение до 20 фотографий
 
 @admin.register(House)
 class HouseAdmin(admin.ModelAdmin):
@@ -25,7 +25,7 @@ class HousePhotoAdmin(admin.ModelAdmin):
 class HousePhotoInline_Spain(admin.TabularInline):
     model = HousePhoto_Spain
     extra = 1  # Показывать 1 пустое поле для добавления фото
-    max_num = 20  # Ограничение до 10 фотографий
+    max_num = 20  # Ограничение до 20 фотографий
 
 @admin.register(House_Spain)
 class HouseSpainAdmin(admin.ModelAdmin):

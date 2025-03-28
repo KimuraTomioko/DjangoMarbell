@@ -99,7 +99,7 @@ def simple_index_spain(request):
                 fail_silently=False
             )
 
-            return redirect('main_page')
+            return redirect('main_page_es')
 
         else:
             print(form.errors)
