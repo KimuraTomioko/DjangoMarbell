@@ -48,7 +48,7 @@ def simple_index(request):
                 f"Message: {bid.message}\n"
             )
             from_email = 'marbell_django@mail.ru'  # Ваш email из settings.py
-            recipient_list = ['zimarev.nazar13@gmail.com']  # Email заказчицы
+            recipient_list = ['zimarev.nazar131328@gmail.com', 'irwin76@gmx.com']  # Email заказчицы
             
             # Отправляем письмо
             send_mail(
@@ -111,7 +111,7 @@ def simple_index_spain(request):
             )
 
             from_email = 'marbell_django@mail.ru'
-            recipient_list = ['zimarev.nazar13@gmail.com', 'zimarev.nazar@yandex.ru']
+            recipient_list = ['zimarev.nazar131328@gmail.com', 'irwin76@gmx.com']
 
             send_mail(
                 subject,
