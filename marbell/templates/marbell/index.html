@@ -341,7 +341,7 @@
         </section>
 
         <!-- Reviews Section -->
-        <section id="reviews" class="section testimonial" >
+        <section id="reviews" class="section testimonial">
             <div class="container">
                 <div class="testimonial-wrapper">
                     <div class="testimonial-content">
@@ -350,48 +350,29 @@
                         <p class="section-description">Read the experiences of our satisfied customers who have enjoyed unforgettable adventures in our motorhomes.</p>
                         <div class="swiper testimonial-slider">
                             <div class="swiper-wrapper">
-                                <!-- Testimonial 1 -->
+                                {% for review in rewiews %}
                                 <div class="swiper-slide">
                                     <div class="testimonial-item">
                                         <div class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
+                                            {% for i in "12345"|make_list %}
+                                                {% if forloop.counter <= review.rate %}
+                                                    <i class="fas fa-star"></i>
+                                                {% else %}
+                                                    <i class="far fa-star"></i>
+                                                {% endif %}
+                                            {% endfor %}
                                         </div>
-                                        <h4 class="author-name">Michael and Sarah</h4>
-                                        <p class="testimonial-text">"Amazing experience with MarbellaCamper! The motorhome was spotlessly clean and fully equipped with everything we needed. The air suspension made the journey incredibly smooth. Their 24/7 support was fantastic - they even recommended some beautiful campsites along the Costa del Sol. Will definitely rent from them again!"</p>
+                                        <h4 class="author-name">{{ review.name }}</h4>
+                                        <p class="testimonial-text">"{{ review.text }}"</p>
                                     </div>
                                 </div>
-                                <!-- Testimonial 2 -->
+                                {% empty %}
                                 <div class="swiper-slide">
                                     <div class="testimonial-item">
-                                        <div class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                        <h4 class="author-name">Thomas Family</h4>
-                                        <p class="testimonial-text">"Perfect family vacation! We rented the Benimar Sport 323 for two weeks. The motorhome was modern, spacious, and had all the amenities we could ask for. The kids loved it, and the service from the MarbellaCamper team was exceptional. The direct rental process was straightforward and saved us money too!"</p>
+                                        <p>No reviews available yet.</p>
                                     </div>
                                 </div>
-                                <!-- Testimonial 3 -->
-                                <div class="swiper-slide">
-                                    <div class="testimonial-item">
-                                        <div class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                        <h4 class="author-name">Andreas & Maria</h4>
-                                        <p class="testimonial-text">"Our trip through Spain was unforgettable thanks to MarbellaCamper! The McLouis MC4-60 was perfect for our needs - comfortable, well-maintained, and equipped with everything we needed. The owners were incredibly helpful and provided excellent tips for our journey. The motorhome's air suspension made driving a real pleasure!"</p>
-                                    </div>
-                                </div>
+                                {% endfor %}
                             </div>
                             <div class="swiper-pagination"></div>
                             <div class="swiper-button-prev"></div>

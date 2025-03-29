@@ -38,7 +38,12 @@ class HousePhotoSpainAdmin(admin.ModelAdmin):
 
 
 
-#@admin.register(Rewiews)
-#class RewiewAdmin(admin.ModelAdmin):
-#    list_display = ('name', 'rate')
-#    list_display_links = ('name',)
+@admin.register(Rewiews)
+class RewiewAdmin(admin.ModelAdmin):
+    list_display = ('name', 'rate')
+    list_display_links = ('name',)
+
+@admin.register(Rewiews_Spain)
+class RewiewAdmin_Spain(admin.ModelAdmin):
+    list_display = ('name', 'rate')
+    list_display_links = ('name',)

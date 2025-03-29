@@ -79,3 +79,15 @@ class Rewiews(models.Model):
     class Meta:
         verbose_name = 'Отзыв'
         verbose_name_plural = 'Отзывы'
+
+class Rewiews_Spain(models.Model):
+    name = models.CharField(max_length=50, blank=False, null=False, verbose_name = 'Имя пользователя')
+    rate = models.PositiveIntegerField(verbose_name='Рейтинг', validators=[MinValueValidator(1), MaxValueValidator(5)])
+    text = models.TextField(blank=True, null=True, verbose_name='Отзыв')
+
+    def __str__(self):
+        return f"{self.rate} - {self.name}"
+    
+    class Meta:
+        verbose_name = 'Отзыв исп.'
+        verbose_name_plural = 'Отзывы исп.'

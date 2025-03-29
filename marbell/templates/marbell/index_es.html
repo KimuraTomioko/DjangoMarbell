@@ -370,59 +370,39 @@
         </section>
 
        
-
         <!-- Reviews Section -->
         <section id="reviews" class="section testimonial">
             <div class="container">
                 <div class="testimonial-wrapper">
                     <div class="testimonial-content">
                         <span class="section-subtitle">TESTIMONIOS</span>
-                        <h2 class="section-title">Comentarios</h2>
-                        <p class="section-description">Lee las experiencias de nuestros clientes satisfechos que han disfrutado de aventuras inolvidables en nuestras autocaravanas.</p>
+                        <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+                        <p class="section-description">Lea las experiencias de nuestros clientes satisfechos que han disfrutado de aventuras inolvidables en nuestras autocaravanas.</p>
                         <div class="swiper testimonial-slider">
                             <div class="swiper-wrapper">
-                                <!-- Testimonial 1 -->
+                                {% for review in rewiews %}
                                 <div class="swiper-slide">
                                     <div class="testimonial-item">
                                         <div class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
+                                            {% for i in "12345"|make_list %}
+                                                {% if forloop.counter <= review.rate %}
+                                                    <i class="fas fa-star"></i>
+                                                {% else %}
+                                                    <i class="far fa-star"></i>
+                                                {% endif %}
+                                            {% endfor %}
                                         </div>
-                                        <h4 class="author-name">Michael y Sarah</h4>
-                                        <p class="testimonial-text">"Increíble experiencia con MarbellaCamper! La casa rodante estaba impecablemente limpia y totalmente equipada con todo lo necesario. La suspensión neumática hizo que el viaje fuera increíblemente suave. Su apoyo las 24 horas del día fue fantástico; incluso recomendaron algunos hermosos campings en la costa del Sol. ¡Definitivamente volveré a alquilar con ellos otra vez!"</p>
+                                        <h4 class="author-name">{{ review.name }}</h4>
+                                        <p class="testimonial-text">"{{ review.text }}"</p>
                                     </div>
                                 </div>
-                                <!-- Testimonial 2 -->
+                                {% empty %}
                                 <div class="swiper-slide">
                                     <div class="testimonial-item">
-                                        <div class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                        <h4 class="author-name">Familia Thomas</h4>
-                                        <p class="testimonial-text">"¡Vacaciones familiares perfectas! Alquilamos el Benimar Sport 323 durante dos semanas. La autocaravana era moderna, espaciosa y tenía todas las comodidades que podríamos pedir. A los niños les encantó, y el servicio del equipo de MarbellaCamper fue excepcional. El proceso de alquiler directo fue sencillo y también nos ahorró dinero!"</p>
+                                        <p>Aún no hay reseñas disponibles.</p>
                                     </div>
                                 </div>
-                                <!-- Testimonial 3 -->
-                                <div class="swiper-slide">
-                                    <div class="testimonial-item">
-                                        <div class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                        <h4 class="author-name">Andreas y María</h4>
-                                        <p class="testimonial-text">"¡Nuestro viaje por España fue inolvidable gracias a MarbellaCamper! El McLouis MC4-60 fue perfecto para nuestras necesidades: cómodo, bien mantenido y equipado con todo lo que necesitábamos. Los propietarios fueron increíblemente serviciales y proporcionaron excelentes consejos para nuestro viaje. ¡La suspensión de aire de la autocaravana hizo que conducir fuera un verdadero placer!"</p>
-                                    </div>
-                                </div>
+                                {% endfor %}
                             </div>
                             <div class="swiper-pagination"></div>
                             <div class="swiper-button-prev"></div>

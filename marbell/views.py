@@ -1,11 +1,23 @@
 from django.shortcuts import render, redirect
 from django.core.mail import send_mail
-from .models import House, House_Spain
+from .models import House, House_Spain, Rewiews, Rewiews_Spain
 from .forms import BidCreation
 
 def simple_index(request):
     print("Method:", request.method)
     print("POST data:", request.POST)
+
+    # Формируем список для вывода отзывов
+    rewiews = []
+
+    for rewiew in Rewiews.objects.all():
+        rewiew_data = {
+            'name': rewiew.name,
+            'rate': rewiew.rate,
+            'text': rewiew.text
+        }
+        rewiews.append(rewiew_data)
+    
     
     # Формируем список домов с разбиением prices и mileage
     houses = []
@@ -51,13 +63,23 @@ def simple_index(request):
             return redirect('main_page')
         else:
             print(form.errors)
-            return render(request, 'marbell/index.html', {'form': form, 'houses': houses})
+            return render(request, 'marbell/index.html', {'form': form, 'houses': houses, 'rewiews': rewiews})
     
     form = BidCreation()
-    return render(request, 'marbell/index.html', {'form': form, 'houses': houses})
+    return render(request, 'marbell/index.html', {'form': form, 'houses': houses, 'rewiews': rewiews})
 
 
 def simple_index_spain(request):
+
+    rewiews = []
+
+    for rewiew in Rewiews_Spain.objects.all():
+        rewiew_data = {
+            'name': rewiew.name,
+            'rate': rewiew.rate,
+            'text': rewiew.text
+        }
+        rewiews.append(rewiew_data)
 
     # Формируем список домов с разбиением prices и mileage
     houses = []
@@ -89,7 +111,7 @@ def simple_index_spain(request):
             )
 
             from_email = 'marbell_django@mail.ru'
-            recipient_list = ['zimarev.nazar13@gmail.com']
+            recipient_list = ['zimarev.nazar13@gmail.com', 'zimarev.nazar@yandex.ru']
 
             send_mail(
                 subject,
@@ -105,13 +127,15 @@ def simple_index_spain(request):
             print(form.errors)
             context = {
                 'form': form,
-                'houses': houses
+                'houses': houses,
+                'rewiews': rewiews
             }
             return render(request, 'marbell/index_es.html', context)
     
     form = BidCreation()
     context = {
         'form': form,
-        'houses': houses
+        'houses': houses,
+        'rewiews': rewiews
     }
     return render(request, 'marbell/index_es.html', context)
