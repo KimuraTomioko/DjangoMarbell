@@ -7,23 +7,19 @@ from .forms import BidCreation
 
 def index(request):
     current_domain = request.get_host()
+    print(f"Current domain: {current_domain}")  # Для отладки
 
-    # Определяем, какой домен и какую версию показывать
-    if current_domain == 'marbellacamper.com':
-        # Английская версия
-        rewiews = [{'name': r.name, 'rate': r.rate, 'text': r.text} for r in Rewiews.objects.all()]
-        houses = [
-            {
-                'name': house.name,
-                'description': house.description,
-                'prices': house.prices.split('\n') if house.prices else [],
-                'mileage': house.mileage.split('\n') if house.mileage else [],
-                'photos': house.photos.all()
-            }
-            for house in House.objects.all()
-        ]
-        template = 'marbell/index.html'
-    elif current_domain == 'marbellacamper.es':
+    # Проверяем параметр языка в URL (?lang=en или ?lang=es)
+    lang = request.GET.get('lang', None)
+
+    # Если есть параметр lang, редиректим на нужный домен
+    if lang == 'es' and current_domain != 'marbellacamper.es':
+        return HttpResponseRedirect(f"http://marbellacamper.es{reverse('main_page')}")
+    elif lang == 'en' and current_domain != 'marbellacamper.com':
+        return HttpResponseRedirect(f"http://marbellacamper.com{reverse('main_page')}")
+
+    # Определяем версию по домену
+    if current_domain == 'marbellacamper.es':
         # Испанская версия
         rewiews = [{'name': r.name, 'rate': r.rate, 'text': r.text} for r in Rewiews_Spain.objects.all()]
         houses = [
@@ -38,9 +34,19 @@ def index(request):
         ]
         template = 'marbell/index_es.html'
     else:
-        # Если домен неизвестный, редиректим на .com (английская версия)
-        redirect_url = f"http://marbellacamper.com{reverse('main_page')}"
-        return HttpResponseRedirect(redirect_url)
+        # Английская версия (по умолчанию для .com или неизвестного домена)
+        rewiews = [{'name': r.name, 'rate': r.rate, 'text': r.text} for r in Rewiews.objects.all()]
+        houses = [
+            {
+                'name': house.name,
+                'description': house.description,
+                'prices': house.prices.split('\n') if house.prices else [],
+                'mileage': house.mileage.split('\n') if house.mileage else [],
+                'photos': house.photos.all()
+            }
+            for house in House.objects.all()
+        ]
+        template = 'marbell/index.html'
 
     # Обработка формы
     if request.method == 'POST':
@@ -59,7 +65,7 @@ def index(request):
             from_email = 'marbell_django@mail.ru'
             recipient_list = ['zimarev.nazar131328@gmail.com', 'irwin76@gmx.com']
             send_mail(subject, message, from_email, recipient_list, fail_silently=False)
-            return redirect('main_page')  # Редирект на корень
+            return redirect('main_page')
         else:
             print(form.errors)
             return render(request, template, {'form': form, 'houses': houses, 'rewiews': rewiews})
