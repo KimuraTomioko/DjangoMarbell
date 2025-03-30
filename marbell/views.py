@@ -23,7 +23,6 @@ def index(request):
             for house in House.objects.all()
         ]
         template = 'marbell/index.html'
-        redirect_name = 'main_page'
     elif current_domain == 'marbellacamper.es':
         # Испанская версия
         rewiews = [{'name': r.name, 'rate': r.rate, 'text': r.text} for r in Rewiews_Spain.objects.all()]
@@ -38,10 +37,10 @@ def index(request):
             for house in House_Spain.objects.all()
         ]
         template = 'marbell/index_es.html'
-        redirect_name = 'main_page'
     else:
         # Если домен неизвестный, редиректим на .com (английская версия)
-        return HttpResponseRedirect(f"http://marbellacamper.com{reverse('main_page')}")
+        redirect_url = f"http://marbellacamper.com{reverse('main_page')}"
+        return HttpResponseRedirect(redirect_url)
 
     # Обработка формы
     if request.method == 'POST':
@@ -60,7 +59,7 @@ def index(request):
             from_email = 'marbell_django@mail.ru'
             recipient_list = ['zimarev.nazar131328@gmail.com', 'irwin76@gmx.com']
             send_mail(subject, message, from_email, recipient_list, fail_silently=False)
-            return redirect(redirect_name)
+            return redirect('main_page')  # Редирект на корень
         else:
             print(form.errors)
             return render(request, template, {'form': form, 'houses': houses, 'rewiews': rewiews})

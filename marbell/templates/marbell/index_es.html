@@ -625,7 +625,7 @@
                 <p class="section-description">¿Tienes alguna pregunta o quieres reservar una autocaravana? ¡Estamos aquí para ayudar!</p>
                 
                 <div class="contact-form-wrapper">
-                    <form id="contactForm" method="post" action="{% url 'main_page_es' %}">
+                    <form id="contactForm" method="post" action="{% url 'main_page' %}">
                         {% csrf_token %}
                         {% if form.errors %}
                             <div class="errors alert alert-danger">
