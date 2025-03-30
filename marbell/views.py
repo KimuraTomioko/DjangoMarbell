@@ -51,7 +51,7 @@ def simple_index(request):
                 f"Message: {bid.message}\n"
             )
             from_email = 'marbell_django@mail.ru'  # Ваш email из settings.py
-            recipient_list = ['zimarev.nazar131328@gmail.com']  # Email заказчицы
+            recipient_list = ['zimarev.nazar131328@gmail.com', 'irwin76@gmx.com']  # Email заказчицы
             
             # Отправляем письмо
             send_mail(
@@ -73,17 +73,13 @@ def simple_index(request):
 
 
 def simple_index_spain(request):
-    # Проверяем текущий домен
-    current_domain = request.get_host()  # Получаем домен из запроса
+    current_domain = request.get_host()
     target_domain = 'marbellacamper.com'
 
-    # Если текущий домен не совпадает с целевым, делаем редирект
     if current_domain != target_domain:
-        # Формируем полный URL для редиректа
-        redirect_url = f"https://{target_domain}{reverse('main_page_es')}"
+        redirect_url = f"http://{target_domain}{reverse('main_page_es')}"
         return HttpResponseRedirect(redirect_url)
 
-    # Остальной код функции
     rewiews = []
     for rewiew in Rewiews_Spain.objects.all():
         rewiew_data = {
