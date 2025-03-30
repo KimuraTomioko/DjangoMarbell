@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('camper/', include('marbell.urls')),
+    path('', include('marbell.urls')),
 ]
 
 if settings.DEBUG:
